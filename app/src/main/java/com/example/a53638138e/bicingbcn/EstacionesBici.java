@@ -84,6 +84,7 @@ public class EstacionesBici  implements Serializable {
         return status;
     }
 
+
     //Setters
 
 
@@ -95,12 +96,12 @@ public class EstacionesBici  implements Serializable {
         this.lat = lat;
     }
 
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
-    }
-
     public void setLon(double lon) {
         this.lon = lon;
+    }
+
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
     }
 
     public void setStreetNumber(int streetNumber) {
@@ -126,5 +127,6 @@ public class EstacionesBici  implements Serializable {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
 
 }
