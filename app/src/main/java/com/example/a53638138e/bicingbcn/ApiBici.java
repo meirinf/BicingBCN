@@ -51,7 +51,6 @@ public class ApiBici {
 
             }
 
-
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
