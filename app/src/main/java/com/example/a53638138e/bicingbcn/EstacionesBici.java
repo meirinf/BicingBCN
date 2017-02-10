@@ -21,12 +21,14 @@ public class EstacionesBici  implements Serializable {
     int bikes;   //Bicis disponibles
     ArrayList<Integer> nearbyStations; //Estaciones cercanas
     boolean status;  //Estado de la estacion cerrada/abierta
+    String type;
 
 
     //Constructors
 
-    public EstacionesBici(int idEstacion, double lat, double lon, String streetName, int streetNumber, int slots, int altitude, int bikes, ArrayList<Integer> nearbyStations, boolean status) {
+    public EstacionesBici(int idEstacion,String type, double lat, double lon, String streetName, int streetNumber, int slots, int altitude, int bikes, ArrayList<Integer> nearbyStations, boolean status) {
         this.idEstacion = idEstacion;
+        this.type = type;
         this.lat = lat;
         this.lon = lon;
         this.streetName = streetName;
@@ -43,6 +45,11 @@ public class EstacionesBici  implements Serializable {
 
 
     //Getters
+
+
+    public String getType() {
+        return type;
+    }
 
     public int getIdEstacion() {
         return idEstacion;
@@ -90,6 +97,10 @@ public class EstacionesBici  implements Serializable {
 
     public void setIdEstacion(int idEstacion) {
         this.idEstacion = idEstacion;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setLat(double lat) {
