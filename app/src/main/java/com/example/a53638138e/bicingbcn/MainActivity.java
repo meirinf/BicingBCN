@@ -108,27 +108,27 @@ public class MainActivity extends AppCompatActivity {
                 startMaker.setTitle(calle+" nº "+number);
 
                 if (estaciones.get(i).getType().equals("BIKE")) {
-                    if (porcentaje == 0) startMaker.setIcon(resources.getDrawable(R.drawable.ic_action_name));
+                    if (porcentaje == 0) startMaker.setIcon(resources.getDrawable(R.drawable.biciok));
                     if (porcentaje > 0 && porcentaje <= 25)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.disponmedia));
+                        startMaker.setIcon(resources.getDrawable(R.drawable.bicicasok));
                     if (porcentaje > 25 && porcentaje <= 50)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.disponmedia));
+                        startMaker.setIcon(resources.getDrawable(R.drawable.bicimid));
                     if (porcentaje > 50 && porcentaje <= 75)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.casino));
+                        startMaker.setIcon(resources.getDrawable(R.drawable.bicicasno));
                     if (porcentaje > 75 && porcentaje <= 100)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.nohay));
+                        startMaker.setIcon(resources.getDrawable(R.drawable.bicino));
 
                 } else  {
                     if (porcentaje == 0)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.motlibre));
+                        startMaker.setIcon(resources.getDrawable(R.drawable.motook));
                     if (porcentaje > 0 && porcentaje <= 25)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.mediomoto));
+                        startMaker.setIcon(resources.getDrawable(R.drawable.motomidok));
                     if (porcentaje > 25 && porcentaje <= 50)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.mediomoto));
+                        startMaker.setIcon(resources.getDrawable(R.drawable.midmoto));
                     if (porcentaje > 50 && porcentaje <= 75)
                         startMaker.setIcon(resources.getDrawable(R.drawable.casinomoto));
                     if (porcentaje > 75 && porcentaje <= 100)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.nomoto));
+                        startMaker.setIcon(resources.getDrawable(R.drawable.motono));
 
                 }
 

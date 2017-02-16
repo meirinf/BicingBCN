@@ -29,5 +29,6 @@ dependencies {
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.google.android.gms:play-services-maps:10.0.1'
     compile 'com.github.MKergall:osmbonuspack:6.2'
+    compile 'org.osmdroid:osmdroid-android:5.1@aar'
     testCompile 'junit:junit:4.12'
 }
