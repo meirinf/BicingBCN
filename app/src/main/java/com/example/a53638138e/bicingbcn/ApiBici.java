@@ -49,6 +49,8 @@ public class ApiBici {
                     estaciones.setStatus(true);
                 }
 
+                estacionesBicis.add(estaciones);
+
             }
 
 
