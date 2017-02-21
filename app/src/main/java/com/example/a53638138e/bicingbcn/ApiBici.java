@@ -28,8 +28,8 @@ public class ApiBici {
         String urls = builtUri.toString();
 
         try {
-            String JsonResponse = HttpUtils.get(urls);
 
+            String JsonResponse = HttpUtils.get(urls);
             JSONObject data = new JSONObject(JsonResponse);
             JSONArray jsonRecetas = data.getJSONArray("stations");
             for (int i = 0; i < jsonRecetas.length(); i++) {
@@ -38,16 +38,13 @@ public class ApiBici {
                 JSONObject object = jsonRecetas.getJSONObject(i);
 
                 estaciones.setIdEstacion(object.getInt("id"));
+                estaciones.setType(object.getString("type"));
                 estaciones.setLat(object.getDouble("latitude"));
                 estaciones.setLon(object.getDouble("longitude"));
                 estaciones.setStreetName(object.getString("streetName"));
-                estaciones.setStreetNumber(object.getInt("streetNumber"));
                 estaciones.setAltitude(object.getInt("altitude"));
                 estaciones.setSlots(object.getInt("slots"));
                 estaciones.setBikes(object.getInt("bikes"));
-                if(object.getString("status").equalsIgnoreCase("OPN")){
-                    estaciones.setStatus(true);
-                }
 
                 estacionesBicis.add(estaciones);
 

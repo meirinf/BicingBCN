@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
+
+import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 import java.util.ArrayList;
 import org.osmdroid.api.IMapController;
@@ -26,10 +28,12 @@ import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import static android.R.attr.fragment;
+import static android.R.attr.start;
 
 public class MainActivity extends AppCompatActivity {
 
     private MapView map;
+    MapController mapController ;
 
 
     @Override
@@ -50,8 +54,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    ArrayList<EstacionesBici> estaciones;
 
-    public class RefreshAsyncTask extends AsyncTask<Void, Void, ArrayList<EstacionesBici>> {
+    public class RefreshAsyncTask extends AsyncTask<Void, Void, Void >{
 
         Context context;
         MapView map;
@@ -67,78 +72,78 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected ArrayList<EstacionesBici> doInBackground(Void... voids) {
-            ArrayList<EstacionesBici> estaciones = ApiBici.getBicing();;
-            return estaciones;
+        protected Void doInBackground(Void... params) {
+            estaciones = ApiBici.getBicing();
+            return null;
         }
-
 
         @Override
-        protected void onPostExecute(ArrayList<EstacionesBici> estaciones) {
-            super.onPostExecute(estaciones);
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
 
-            mapController = map.getController();
             initializeMap();
 
+            mapController = map.getController();
+                for (int i = 0; i < estaciones.size(); i++) {
+                    Double latitud = estaciones.get(i).getLat();
+                    Double longitud = estaciones.get(i).getLon();
+                    String calle = estaciones.get(i).getStreetName();
+                    int slots = estaciones.get(i).getSlots();
+                    int bikes = estaciones.get(i).getBikes();
+                    int total = bikes + slots;
+                    int porcentaje = 0;
+                    String tipo = estaciones.get(i).getType();
+                    porcentaje = (100 * slots) / total;
+                    GeoPoint estationpoint = new GeoPoint(latitud, longitud);
+                    Marker startMaker = new Marker(map);
+                    startMaker.setPosition(estationpoint);
 
-            for (int i = 0; i < estaciones.size() ; i++) {
-                Double latitud = estaciones.get(i).getLat();
-                Double longitud = estaciones.get(i).getLon();
-                String calle = estaciones.get(i).getStreetName();
-                // number = estaciones.get(i).getStreetNumber();
-                int slots = estaciones.get(i).getSlots();
-                int bikes = estaciones.get(i).getBikes();
-                int total= bikes + slots;
-                int porcentaje = 0;
-                porcentaje=(100 * slots)/total;
-                GeoPoint estationpoint = new GeoPoint(latitud, longitud);
-                Marker startMaker = new Marker(map);
-                startMaker.setPosition(estationpoint);
-               // startMaker.setTitle(calle +" nº "+ number);
-                //Log.d("estacion",estaciones.get(i).getType());
-                if (estaciones.get(i).getType().equals("BIKE")) {
-                    if (porcentaje == 0)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.biciok));
-                    if (porcentaje > 0 && porcentaje <= 25)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.bicicasok));
-                    if (porcentaje > 25 && porcentaje <= 50)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.bicimid));
-                    if (porcentaje > 50 && porcentaje <= 75)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.bicicasno));
-                    if (porcentaje > 75 && porcentaje <= 100)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.bicino));
+                    Log.d("estacion",estaciones.get(i).getType());
+                    if (tipo.equals("BIKE")) {
+                        if (porcentaje == 0)
+                            startMaker.setIcon(resources.getDrawable(R.drawable.biciok));
+                        if (porcentaje > 0 && porcentaje <= 25)
+                            startMaker.setIcon(resources.getDrawable(R.drawable.bicicasok));
+                        if (porcentaje > 25 && porcentaje <= 50)
+                            startMaker.setIcon(resources.getDrawable(R.drawable.bicimid));
+                        if (porcentaje > 50 && porcentaje <= 75)
+                            startMaker.setIcon(resources.getDrawable(R.drawable.bicicasno));
+                        if (porcentaje > 75 && porcentaje <= 100)
+                            startMaker.setIcon(resources.getDrawable(R.drawable.bicino));
 
-                }if (estaciones.get(i).getType().equals("BIKE-ELECTRIC")){
-                    if (porcentaje == 0)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.motook));
-                    if (porcentaje > 0 && porcentaje <= 25)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.motomidok));
-                    if (porcentaje > 25 && porcentaje <= 50)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.midmoto));
-                    if (porcentaje > 50 && porcentaje <= 75)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.casinomoto));
-                    if (porcentaje > 75 && porcentaje <= 100)
-                        startMaker.setIcon(resources.getDrawable(R.drawable.motono));
+                    }
+                    if (tipo.equals("BIKE-ELECTRIC")) {
+                        if (porcentaje == 0)
+                            startMaker.setIcon(resources.getDrawable(R.drawable.motook));
+                        if (porcentaje > 0 && porcentaje <= 25)
+                            startMaker.setIcon(resources.getDrawable(R.drawable.motomidok));
+                        if (porcentaje > 25 && porcentaje <= 50)
+                            startMaker.setIcon(resources.getDrawable(R.drawable.midmoto));
+                        if (porcentaje > 50 && porcentaje <= 75)
+                            startMaker.setIcon(resources.getDrawable(R.drawable.casinomoto));
+                        if (porcentaje > 75 && porcentaje <= 100)
+                            startMaker.setIcon(resources.getDrawable(R.drawable.motono));
 
+                    }
+                    map.getOverlays().add(startMaker);
                 }
+               /* GeoPoint startPoint = new GeoPoint(41.38498,2.18417);
+                setZoom(startPoint);*/
+                map.invalidate();
 
-                map.getOverlays().add(startMaker);
             }
-            GeoPoint startPoint = new GeoPoint(41.38, 2.16);
-            setZoom(startPoint);
-            map.invalidate();
         }
+
         private void initializeMap() {
             map.setTileSource(TileSourceFactory.MAPNIK);
             map.setTilesScaledToDpi(true);
-
             map.setBuiltInZoomControls(true);
             map.setMultiTouchControls(true);
         }
+
         private void setZoom(GeoPoint startPoint) {
             //  Setteamos el zoom al mismo nivel y ajustamos la posición a un geopunto
             mapController.setZoom(10);
             mapController.setCenter(startPoint);
         }
     }
-}
